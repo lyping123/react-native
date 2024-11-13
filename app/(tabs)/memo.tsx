@@ -1,30 +1,53 @@
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Linking, Text, Button, View,ToastAndroid,Modal,TextInput,Pressable ,Alert,SafeAreaView} from 'react-native';
 import React from 'react';
-import {Link} from 'expo-router'
-
+import { Collapsible } from '@/components/Collapsible';
+import { ExternalLink } from '@/components/ExternalLink';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 
 export default function TabTwoScreen() {
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const [text, onChangeText] = React.useState("hellow world");
+
+  const showToast=()=>{
+    ToastAndroid.show("Hi i am leo how are you?", ToastAndroid.SHORT);
+  };
+
+  const showToastwithGravity=()=>{
+    ToastAndroid.showWithGravity(
+      "This is gravitys toast",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
   
-  
+  const toastwithinputtext=(text)=>{
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+    //console.log(text);
+  }
+
   return (
     <SafeAreaView style={[styles.container,contaistyles ]}>
-      <Button title="Default Toast"  color="red"   />
+      <Button title="Default Toast"  color="red"  onPress={()=>showToast()} />
       <View style={{ height: 10 }} />
-      <Button title="Toast with textInput"  color="orange" />
+      <Button title="Toast with textInput"  color="orange" onPress={()=>toastwithinputtext(text)} />
       <View style={{ height: 10 }} />
-      <Button title="Toast with gravity"  color="green" />
+      <Button title="Toast with gravity"  color="green" onPress={()=>showToastwithGravity()} />
       <View style={{ height: 10 }} />
 
-      <Button title="Open Modal" color="blue"  />
+      <Button title="Open Modal" color="blue" onPress={() => setModalVisible(true)} />
       
       <View style={{ height: 10 }} />
-      <Button title="Toast with layout"  color="purple"/>
+      <Button title="Toast with layout"  color="purple" onPress={()=>Linking.openURL('http://google.com')} />
       <TextInput
         style={styles.input}
+        onChangeText={onChangeText}
+        value={text}
       />
-
-      {/* <Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -43,7 +66,7 @@ export default function TabTwoScreen() {
             </Pressable>
           </View>
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 }
